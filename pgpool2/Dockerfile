@@ -11,7 +11,8 @@ RUN tar zxvf pgpool-II-3.4.0.tar.gz
 # Build pgpool2
 WORKDIR /pgpool-II-3.4.0
 RUN ./configure
-RUN make & make install
+RUN make
+RUN make install
 
 # Build pgpool2 extensions for postgres
 WORKDIR /pgpool-II-3.4.0/src/sql
