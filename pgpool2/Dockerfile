@@ -27,8 +27,8 @@ RUN rm -rf /pgpool-II-3.4.0 & rm /pgpool-II-3.4.0.tar.gz
 # Install pgpoolAdmin
 WORKDIR /var/www
 RUN rm index.html
-RUN curl -O http://www.pgpool.net/mediawiki/images/pgpoolAdmin-3.2.2.tar.gz
-RUN tar --strip-components=1 -zxvf pgpoolAdmin-3.2.2.tar.gz
+RUN curl -O http://www.pgpool.net/mediawiki/images/pgpoolAdmin-3.4.0.tar.gz
+RUN tar --strip-components=1 -zxvf pgpoolAdmin-3.4.0.tar.gz
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
