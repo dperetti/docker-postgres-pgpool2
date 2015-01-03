@@ -6,19 +6,18 @@ gosu postgres postgres --single template1 <<- EOSQL
 	CREATE EXTENSION pgpool_adm
 EOSQL
 
+gosu postgres postgres --single -jE <<-EOSQL
+	CREATE USER "$REPLICATION_USER" REPLICATION LOGIN ENCRYPTED PASSWORD $REPLICATION_PASSWORD;
+EOSQL
+
 # postgresql.conf
 { echo; echo "wal_level = hot_standby"; } >> "$PGDATA"/postgresql.conf
-{ echo "max_wal_senders = 5"; } >> "$PGDATA"/postgresql.conf
+{ echo "max_wal_senders = 1"; } >> "$PGDATA"/postgresql.conf
+{ echo "max_replication_slots = 1"; } >> "$PGDATA"/postgresql.conf
 
 # pg_hba.conf
 { echo; echo "local replication postgres trust"; } >> "$PGDATA"/pg_hba.conf
-
-
-# recovery.conf
-# { echo "standby_mode = 'off'"; } > "$PGDATA"/recovery.conf
-# { echo "primary_conninfo = 'host=$MASTER_HOST port=5432 user=postgres'"; } > "$PGDATA"/recovery.conf
-# { echo "primary_slot_name = 'node_a_slot'"; } > "$PGDATA"/recovery.conf
-# { echo "restore_command = 'on'"; } > "$PGDATA"/recovery.conf
+{ echo; echo "host replication \"$REPLICATION_USER\" 0.0.0.0/0 md5"; } >> "$PGDATA"/pg_hba.conf
 
 
 

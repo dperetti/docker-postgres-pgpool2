@@ -42,8 +42,17 @@ ADD ./pool_hba.conf /usr/local/etc/
 ADD setup.sh /var/www/
 RUN sh ./setup.sh
 
-EXPOSE 80
+# pgpool
 EXPOSE 9999
+# pgpoolAdmin
+EXPOSE 80
 
 # Add pgpool extension to the database template
 ADD init_sql.sh /docker-entrypoint-initdb.d/
+
+# Add streaming replication script
+RUN mkdir /replication
+COPY stream_from_master.sh /replication/
+RUN chmod +x /replication/stream_from_master.sh
+ENV REPLICATION_USER replicator
+ENV REPLICATION_PASSWORD replicator
