@@ -1,0 +1,18 @@
+data:
+    image: busybox
+    volumes:
+        - /var/lib/postgresql/data
+    command: echo data-only container
+db:
+    build: ../../docker
+    command: /replication/stream_from_master.sh
+    volumes_from: 
+        - data
+    ports:
+        - "5432:5432"
+    environment:
+        PRIMARY_HOST: 192.168.59.103
+        PRIMARY_PORT: 5430
+        REPLICATION_USER: replicator
+        REPLICATION_PASSWORD: myamazingpasswurd
+        REPLICATION_SLOT: some_slot        

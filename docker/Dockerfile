@@ -37,9 +37,9 @@ ENV PG_REPL_USER docker
 ENV PG_REPL_PASS docker
 ENV PCP_USER docker
 ENV PCP_PASS docker
-ADD ./pgmgt.conf.php /var/www/conf/
-ADD ./pool_hba.conf /usr/local/etc/
-ADD setup.sh /var/www/
+ADD ./pgpool/pgmgt.conf.php /var/www/conf/
+ADD ./pgpool/pool_hba.conf /usr/local/etc/
+ADD ./pgpool/setup.sh /var/www/
 RUN sh ./setup.sh
 
 # pgpool

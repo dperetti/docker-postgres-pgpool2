@@ -1,0 +1,15 @@
+data:
+    image: busybox
+    volumes:
+        - /var/lib/postgresql/data
+    command: echo data-only container
+db:
+    build: ../../docker
+    volumes_from: 
+        - data
+    ports:
+        - "5430:5432"
+    environment:
+        REPLICATION_USER: replicator
+        REPLICATION_PASSWORD: myamazingpasswurd
+        REPLICATION_SLOT: some_slot
